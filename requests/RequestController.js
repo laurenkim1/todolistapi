@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 router.use(bodyParser.urlencoded({ extended: true }));
 var Request = require('./Request');
 
-// CREATES A NEW USER
+// CREATES A NEW REQUEST
 router.post('/', function (req, res) {
     Request.create({
             userID: req.body.userID,
@@ -22,16 +22,17 @@ router.post('/', function (req, res) {
             xCoordinate: req.body.xCoordinate,
             yCoordinate: req.body.yCoordinate
         },
-        function (err, user) {
+        function (err, request) {
             if (err) return res.status(500).send("There was a problem adding the information to the database.");
-            res.status(200).send(user);
+            res.status(200).send(request);
         });
 });
-// RETURNS ALL THE USERS IN THE DATABASE
+// RETURNS ALL THE REQUESTS IN THE DATABASE
 router.get('/', function (req, res) {
-    User.find({}, function (err, users) {
-        if (err) return res.status(500).send("There was a problem finding the users.");
-        res.status(200).send(users);
+    Request.find({}, function (err, requests) {
+        if (err) return res.status(500).send("There was a problem finding the requests.");
+        res.status(200).send(requests);
     });
 });
+
 module.exports = router;
