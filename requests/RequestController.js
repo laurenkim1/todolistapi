@@ -36,8 +36,8 @@ router.get('/', function (req, res) {
 });
 
 // GETS A SINGLE REQUEST FROM THE DATABASE
-router.get('/:requestID', function (req, res) {
-    Request.findById(req.params.requestID, function (err, request) {
+router.get('/:id', function (req, res) {
+    Request.findById(req.params.id, function (err, request) {
         if (err) return res.status(500).send("There was a problem finding the request.");
         if (!request) return res.status(404).send("No request found.");
         res.status(200).send(request);
@@ -45,8 +45,8 @@ router.get('/:requestID', function (req, res) {
 });
 
 // DELETES A REQUEST FROM THE DATABASE
-router.delete('/:requestID', function (req, res) {
-    Request.findByIdAndRemove(req.params.requestID, function (err, request) {
+router.delete('/:id', function (req, res) {
+    Request.findByIdAndRemove(req.params.id, function (err, request) {
         if (err) return res.status(500).send("There was a problem deleting the request.");
         res.status(200).send("Request "+ request.requestTitle +" was deleted.");
     });
