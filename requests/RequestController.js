@@ -35,4 +35,30 @@ router.get('/', function (req, res) {
     });
 });
 
+// GETS A SINGLE REQUEST FROM THE DATABASE
+router.get('/:requestID', function (req, res) {
+    Request.findById(req.params.requestID, function (err, request) {
+        if (err) return res.status(500).send("There was a problem finding the request.");
+        if (!request) return res.status(404).send("No request found.");
+        res.status(200).send(request);
+    });
+});
+
+// DELETES A REQUEST FROM THE DATABASE
+router.delete('/:requestID', function (req, res) {
+    Request.findByIdAndRemove(req.params.requestID, function (err, request) {
+        if (err) return res.status(500).send("There was a problem deleting the request.");
+        res.status(200).send("Request "+ request.requestTitle +" was deleted.");
+    });
+});
+
+// UPDATES A SINGLE REQUEST IN THE DATABASE
+router.put('/:id', function (req, res) {
+
+    Request.findByIdAndUpdate(req.params.id, req.body, {new: true}, function (err, request) {
+        if (err) return res.status(500).send("There was a problem updating the request.");
+        res.status(200).send(request);
+    });
+});
+
 module.exports = router;
